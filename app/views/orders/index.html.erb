@@ -1,0 +1,75 @@
+
+<br>
+<div class="row">
+  <div class="col-md-2">
+    <%= link_to "Continuar comprando", root_path, class: "btn btn-warning" %>
+  </div>
+  <div class="col-md-2 offset-md-8">
+    <%= link_to "Vaciar Carro", empty_cart_orders_path, class: "btn btn-danger", method: :delete %>
+  </div>
+</div>
+<br><br>
+
+<% if current_user.has_any_order? %>
+  <table class="table table-hover">
+    <tr>
+      <th>
+        Producto
+      </th>
+      <th>
+        Valor Unitario
+      </th>
+      <th>
+        Cantidad
+      </th>
+      <th>
+        Subtotal
+      </th>
+      <th>
+        Remover
+      </th>
+    </tr>
+    <% @cart.each do |order| %>
+      <tr>
+        <td>
+          <%= order.product.name %>
+        </td>
+        <td>
+          $<%= order.product.price %>
+        </td>
+        <td>
+          <%= order.quantity %>
+        </td>
+        <td>
+          $<%= order.quantity * order.product.price %>
+        </td>
+        <td>
+          <%= link_to order_path(order), class: "btn btn-danger btn-sm", method: :delete do %>
+            <i class="fas fa-trash-alt"></i>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <th>
+        Total:
+      </th>
+      <th></th>
+      <th></th>
+      <th>
+        $<%= @total %>
+      </th>
+    </tr>
+  </table>
+  <div class="row">
+    <div class="col-md-2 offset-md-9">
+      <%= link_to "Confirmar Compra", pre_pay_billings_path, class: "btn btn-success" %>
+    </div>
+
+  </div>
+<% else %>
+  <h5>
+    No tienes productos en el carro...
+  </h5>
+<% end %>

@@ -1,0 +1,48 @@
+
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <input type="text" class="form-control" placeholder="Busca un producto aquí..." id="buscar" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+  </div>
+</div>
+
+<div class="row" id="products">
+  <%= render @products %>
+</div>
+
+<script type="text/javascript">
+  $('#buscar').keyup(function(event) {
+
+    $.ajax({
+      url: '<%= products_path %>',
+      type: 'GET',
+      dataType: 'script',
+      data: {buscar: $('#buscar').val()}
+    })
+    .done(function() {
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+  });
+</script>
+
+<!-- <div class="card">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div> -->
